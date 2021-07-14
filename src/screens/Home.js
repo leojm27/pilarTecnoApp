@@ -33,13 +33,13 @@ export const Home = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <ImageBackground
         style={{ height }}
-        source={require('../assets/images/fondo6.jpg')}
+        source={require('../assets/images/fondo1.jpg')}
       >
         <View style={{ flexDirection: 'column', height, justifyContent: 'center' }}>
           <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity
               onPress={() => this._onHomePress()}
-              style={[styles.button, { backgroundColor: 'rgba(60, 179, 113, 0.5)' }]}
+              style={[styles.button, { backgroundColor: 'rgba(60, 235, 113, 0.8)' }]}
             >
               <Text style={styles.text}>
                 Principal
@@ -47,8 +47,8 @@ export const Home = () => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => navigation.navigate('Profile')}
-              style={[styles.button, { backgroundColor: 'rgba(238, 0, 238, 0.5)' }]}>
+              //onPress={() => navigation.navigate('ProfileStackScreen')}
+              style={[styles.button, { backgroundColor: 'rgba(238, 0, 238, 0.8)' }]}>
               <Text style={styles.text}>
                 Perfil
               </Text>
@@ -57,15 +57,15 @@ export const Home = () => {
 
           <View style={{ flexDirection: 'row', }}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Posts')}
-              style={[styles.button, { backgroundColor: 'rgba(255, 165, 0, 0.5)' }]}>
+              //onPress={() => navigation.navigate('Posts')}
+              style={[styles.button, { backgroundColor: 'rgba(255, 165, 0, 0.8)' }]}>
               <Text style={styles.text}>
                 Posteos
               </Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => navigation.navigate('Map')}
+              //onPress={() => navigation.navigate('Map')}
               style={[styles.button, { backgroundColor: 'rgba(0, 165, 188, 0.8)' }]}>
               <Text style={styles.text}>
                 Mapa

@@ -5,16 +5,16 @@ import { View, Text, Button } from 'react-native';
 
 export const Map = () => {
 
-    const natigator = useNavigation();
+    //const natigator = useNavigation();
 
     return (
         <View style={styles.margin}>
             <Text style={styles.title}>Screen Map</Text>
 
-            <Button
+            {/* <Button
                 color='black'
                 title="Home"
-                onPress={() => natigator.navigate('Home')} />
+                onPress={() => natigator.navigate('Home')} /> */}
 
         </View>
     );

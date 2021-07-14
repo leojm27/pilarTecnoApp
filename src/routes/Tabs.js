@@ -1,19 +1,72 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Home } from '../screens/Home';
-import { Posts } from '../screens/Posts';
-import { Profile } from '../screens/Profile';
-import { Map } from '../screens/Map';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { ProfileStackScreen } from './ProfileStack';
+import { PostStackScreen } from './PostsStack';
+import { MapStackScreen } from './MapStack';
+import { HomeStackScreen } from './HomeStack';
+import { Icon } from 'react-native-elements';
 
-const Tab = createStackNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
-export const Tabs = () => {
+export const Tabs = (props) => {
     return (
-        <Tab.Navigator>
-            <Tab.Screen name="Home" component={Home} />
-            <Tab.Screen name="Posts" component={Posts} />
-            <Tab.Screen name="Profile" component={Profile} />
-            <Tab.Screen name="Map" component={Map} />
+        <Tab.Navigator
+            barStyle={{
+                backgroundColor: 'green'
+            }}
+        >
+            <Tab.Screen
+                name="Home"
+                component={HomeStackScreen}
+                options={{
+                    tabBarIcon: ({ color }) => (
+                        <Icon
+                            name={'home'}
+                            type="font-awesome-5"
+                            size={20}
+                            color={color}
+                        />),
+                }}
+            />
+            <Tab.Screen
+                name="Post"
+                component={PostStackScreen}
+                options={{
+                    tabBarIcon: ({ color }) => (
+                        <Icon
+                            name={'marker'}
+                            type="font-awesome-5"
+                            size={20}
+                            color={color}
+                        />),
+                }}
+            />
+            <Tab.Screen
+                name="Profile"
+                component={ProfileStackScreen}
+                options={{
+                    tabBarIcon: ({ color }) => (
+                        <Icon
+                            name={'user'}
+                            type="font-awesome-5"
+                            size={20}
+                            color={color}
+                        />),
+                }}
+            />
+            <Tab.Screen
+                name="Map"
+                component={MapStackScreen}
+                options={{
+                    tabBarIcon: ({ color }) => (
+                        <Icon
+                            name={'map'}
+                            type="font-awesome-5"
+                            size={20}
+                            color={color}
+                        />),
+                }}
+            />
         </Tab.Navigator>
     );
 }
