@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Profile } from '../screens/Profile';
 import { createStackNavigator } from '@react-navigation/stack';
+import Profile from '../screens/Profile';
 
 const ProfileStack = createStackNavigator();
 
@@ -11,3 +11,5 @@ export const ProfileStackScreen = () => {
         </ProfileStack.Navigator>
     )
 }
+
+

@@ -1,14 +1,21 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import { Tabs } from '../routes/Tabs';
+import { Provider } from 'react-redux';
+import { store } from '../store';
+import { AppWrapped } from '../routes/AppWrapped';
 import { AppStack } from '../routes/AppStack';
 
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <AppStack />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <AppStack />
+      </NavigationContainer>
+
+      {/*<AppWrapped />*/}
+
+    </Provider>
   )
 }
 
