@@ -21,8 +21,8 @@ export const Home = () => {
 
   _onHomePress = () => {
     Alert.alert(
-      "Hola",
-      "Ya te encuentras ahí",
+      "Hi!",
+      "You are already there",
       [
         { text: "OK", onPress: () => console.log("OK Pressed") }
       ]
@@ -35,14 +35,14 @@ export const Home = () => {
         style={{ height }}
         source={require('../assets/images/fondo1.jpg')}
       >
-        <View style={{ flexDirection: 'column', height, justifyContent: 'center' }}>
+        <View style={{ flexDirection: 'column', height, marginVertical: 100 }}>
           <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity
               onPress={() => this._onHomePress()}
               style={[styles.button, { backgroundColor: 'rgba(60, 235, 113, 0.8)' }]}
             >
               <Text style={styles.text}>
-                Principal
+                Home
               </Text>
             </TouchableOpacity>
 
@@ -50,7 +50,7 @@ export const Home = () => {
               //onPress={() => navigation.navigate('ProfileStackScreen')}
               style={[styles.button, { backgroundColor: 'rgba(238, 0, 238, 0.8)' }]}>
               <Text style={styles.text}>
-                Perfil
+                Profile
               </Text>
             </TouchableOpacity>
           </View>
@@ -60,7 +60,7 @@ export const Home = () => {
               //onPress={() => navigation.navigate('Posts')}
               style={[styles.button, { backgroundColor: 'rgba(255, 165, 0, 0.8)' }]}>
               <Text style={styles.text}>
-                Posteos
+                Posts
               </Text>
             </TouchableOpacity>
 
@@ -68,7 +68,7 @@ export const Home = () => {
               //onPress={() => navigation.navigate('Map')}
               style={[styles.button, { backgroundColor: 'rgba(0, 165, 188, 0.8)' }]}>
               <Text style={styles.text}>
-                Mapa
+                Map
               </Text>
             </TouchableOpacity>
           </View>
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: width / 20,
-    height: width / 2.5,
+    height: width / 3.5,
     width: width / 2.5,
     borderRadius: 15,
     justifyContent: 'center',

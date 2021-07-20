@@ -1,28 +1,50 @@
 
 import React from 'react';
 import { Button } from 'react-native-elements';
-import { StyleSheet, Alert, Text, View, SafeAreaView, ImageBackground, Dimensions, StatusBar } from 'react-native';
+import { StyleSheet, Alert, Text, View, SafeAreaView, ImageBackground, Dimensions, StatusBar, TouchableOpacity } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
 import { actions } from '../store/actions';
+import { Input } from 'react-native-elements/dist/input/Input';
 
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 
 GoogleSignin.configure({
-    webClientId: '64246561680-evotl16p643v64jq2d7agsp62uvq2eqe.apps.googleusercontent.com', //.apps.googleusercontent.com
+    webClientId: '64246561680-evotl16p643v64jq2d7agsp62uvq2eqe.apps.googleusercontent.com',
 });
 
 class Login extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: '',
+
+        };
+    }
+
+
     _loginPress = () => {
         Alert.alert(
             "Login",
-            "Este botón aun no tiene funcionalidad",
+            "Do you want to log in with your Google account?",
             [
-                { text: "OK", onPress: () => console.log("Login Pressed") }
+                {
+                    text: "Yes", onPress: () => {
+                        this.onGoogleButtonPress().then((data) => {
+                            this._storeData(data);
+                        })
+                    }
+                },
+                {
+                    text: "No", onPress: () => {
+                        console.log('_loginPress Cancel')
+                    }
+                }
             ]
         );
     }
@@ -33,14 +55,35 @@ class Login extends React.Component {
         return auth().signInWithCredential(googleCredential)
     }
 
+    onLoginPasswordUserPress = async () => {
+        const { email, password } = this.state;
+        // verificar que no este vacio
+        //(email.)
+
+        auth().signInWithEmailAndPassword(email, password)
+            .then(async data => {
+                if (data) {
+                    //console.log('res login: ' + JSON.stringify(data.user));
+                    try {
+                        await AsyncStorage.setItem(
+                            'isloged',
+                            JSON.stringify(data.user),
+                        );
+                    } catch (e) {
+                        console.log('SetItem error:' + e);
+                    }
+                    this.props.setUser(data.user);
+                }
+            })
+            .catch(err => { console.log(err) })
+    }
+
     _storeData = async (data) => {
-        console.log('Signed in with Google!')
         if (data) {
-            //console.log('res login: ' + JSON.stringify(data.user))
             try {
                 await AsyncStorage.setItem('isloged', JSON.stringify(data.user))
             } catch (e) {
-                console.log('Hubo un error :' + e)
+                console.log('SetItem error:' + e)
             }
             this.props.setUser(data.user)
         }
@@ -48,27 +91,52 @@ class Login extends React.Component {
 
 
     render() {
-        const { email, photoURL, name, loading, password } = {};
         return (
             <SafeAreaView style={{ flex: 1 }}>
-                <View style={styles.content}>
-                    <ImageBackground style={styles.backImage} source={require('../assets/images/fondo1.jpg')}>
+                <View >
+                    <ImageBackground
+                        style={styles.backImage}
+                        source={require('../assets/images/fondo1.jpg')}
+                    >
                         <View>
-                            <Text style={styles.text}>Ingresa con tus Redes Sociales</Text>
+                            <Text style={styles.text}> Log In </Text>
+                        </View>
+
+                        <Input
+                            style={styles.input}
+                            placeholder='email'
+                            placeholderTextColor='#b0b0b0'
+                            onChangeText={em => this.setState({ email: em })}
+                        />
+                        <Input
+                            style={styles.input}
+                            placeholder="password"
+                            placeholderTextColor='#b0b0b0'
+                            secureTextEntry={true}
+                            onChangeText={psw => this.setState({ password: psw })}
+                        />
+
+                        <View style={[styles.buttonsContainer, { flexDirection: 'row' }]}>
+                            <View style={{ marginRight: 10 }}>
+                                <Button style={styles.button} title='Sign In'
+                                    onPress={() => this.onLoginPasswordUserPress()} />
+                            </View>
+                            <View style={{ marginLeft: 10 }}>
+                                <Button style={styles.button} title='Sign Up'
+                                    onPress={() => this.props.navigation.navigate('Create')}
+                                />
+                            </View>
+
                         </View>
 
                         <View style={styles.buttonsContainer}>
                             <Button
-                                style={styles.button} title='Continuar con Google...'
-                                onPress={() => this.onGoogleButtonPress().then( (data) => {
-                                    this._storeData(data);
-                                })}
+                                style={styles.button} title='Continue with Google...'
+                                onPress={() => this._loginPress()}
                             />
                         </View>
 
-                        <View style={styles.buttonsContainer}>
-                            <Button style={styles.button} title='Continuar con Facebook...' />
-                        </View>
+
                     </ImageBackground>
                 </View>
             </SafeAreaView>
@@ -81,16 +149,13 @@ const styles = StyleSheet.create({
     margin: {
         marginHorizontal: 20
     },
-    /*title: {
-        fontSize: 30,
-        marginBottom: 10,
+    input: {
+        marginTop: 10,
+        fontSize: 20,
         fontWeight: 'bold',
-        color: 'green',
-        textAlign: 'center',
-        marginVertical: 100,
-    },*/
-    content: {
-        flex: 1,
+        color: 'white',
+        textAlign: 'left',
+        //backgroundColor: '#fff',
     },
     backImage: {
         height,
@@ -105,21 +170,22 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     button: {
-        margin: width / 20,
+        //margin: width / 20,
+        //marginRight: 20,
         width: width / 1.5,
         borderRadius: 15,
+        //marginLeft: 20,
         justifyContent: 'center',
-        backgroundColor: '#fff',
+        //backgroundColor: '#000',
         zIndex: 1
     },
     buttonsContainer: {
         alignItems: 'center',
-        justifyContent: 'center',
+        //justifyContent: 'center',
         paddingVertical: 20,
-    }
-
-
+    },
 });
+
 
 const mapDispatchToProps = dispatch => ({
     setUser: (data) =>

@@ -10,11 +10,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 export const Tabs = (props) => {
     return (
-        <Tab.Navigator
-            barStyle={{
-                backgroundColor: 'green'
-            }}
-        >
+        <Tab.Navigator>
             <Tab.Screen
                 name="Home"
                 component={HomeStackScreen}

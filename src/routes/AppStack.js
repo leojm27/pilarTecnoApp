@@ -4,7 +4,7 @@ import { Tabs } from './Tabs';
 import auth from '@react-native-firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../store';
-import Login from '../screens/Login';
+import CreateStack from './CreateStack';
 
 const Stack = createStackNavigator();
 
@@ -36,8 +36,12 @@ export const AppStack = (props) => {
     <Stack.Navigator headerMode="none">
       {
         login
-          ? <Stack.Screen name="AppStack" refresh={this.onAuthStateChanged} component={Tabs} />
-          : <Stack.Screen name="Login" component={Login} />
+          ? <Stack.Screen
+            name="AppStack"
+            refresh={this.onAuthStateChanged}
+            component={Tabs}
+          />
+          : <Stack.Screen name="CreateStack" component={CreateStack} />
 
       }
     </Stack.Navigator>

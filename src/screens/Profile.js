@@ -4,7 +4,8 @@ import {
     Dimensions,
     StyleSheet,
     Text,
-    View
+    View,
+    Alert
 } from 'react-native';
 import { connect } from 'react-redux'
 import { Avatar, Button } from 'react-native-elements'
@@ -12,7 +13,8 @@ import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { actions } from '../store';
 
-const { height, width } = Dimensions.get('window')
+const { height, width } = Dimensions.get('window');
+const imageAvatar = 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png';
 class Profile extends React.Component {
 
     constructor(props) {
@@ -34,44 +36,71 @@ class Profile extends React.Component {
         })
     }
 
+    _logOutPress = () => {
+        Alert.alert(
+            "Login",
+            "Do you want to log out?",
+            [
+                {
+                    text: "Yes", onPress: () => {
+                        this.signOff();
+                    }
+                },
+                {
+                    text: "No", onPress: () => {
+                        console.log('_logOutPress Cancel');
+                    }
+                }
+            ]
+        );
+    }
+
+    signOff = () => {
+        auth()
+            .signOut()
+            .then(async () => {
+                console.log('User signed out!');
+                this.props.setUser({ user: null });
+                try {
+                    await AsyncStorage.removeItem('isloged');
+                } catch (e) {
+                    console.log('removeItem error :' + e);
+                }
+            }).catch((e) => {
+                console.log('signOut error :' + e);
+
+            })
+    }
+
 
     render() {
-        const { email, photoURL, name } = this.state
+        let { email, photoURL, name } = this.state;
+
         return (
             <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <View style={styles.content}>
                     <View style={{ alignItems: 'center' }}>
-                        <Avatar
-                            rounded
-                            source={{ uri: photoURL }}
-                            size='xlarge'
-                        />
+                        {(!photoURL)
+                            ? (<Avatar
+                                rounded
+                                source={{ uri: imageAvatar }}
+                                size='xlarge'
+                            />)
+                            : (<Avatar
+                                rounded
+                                source={{ uri: photoURL }}
+                                size='xlarge'
+                            />)}
+
                         <View style={styles.dataContainer}>
                             <Text style={styles.infoText}>{email}</Text>
                             <Text style={styles.infoText}>{name}</Text>
                         </View>
                     </View>
                 </View>
-                <View style={{ flex: 1, top: 50, width: width * 0.5 }}>
-                    <Button title='Salir'
-                        onPress={() => {
-                            auth()
-                                .signOut()
-                                .then(async () => {
-                                    console.log('User signed out!'),
-                                        this.props.setUser({ user: null })
-
-                                    try {
-                                        await AsyncStorage.removeItem('isloged')
-                                    } catch (e) {
-                                        console.log('removeItem error :' + e)
-                                    }
-                                }).catch((error) => {
-                                    // An error happened.
-                                    console.log('signOut error :' + e)
-
-                                })
-                        }}
+                <View style={{ flex: 1, marginTop: 50, width: width * 0.5 }}>
+                    <Button title='Sign off'
+                        onPress={() => this._logOutPress() }
                     />
                 </View>
             </SafeAreaView>
@@ -87,12 +116,13 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        top: 50,
+        marginTop: 60,
+        //top: 50,
         justifyContent: 'center',
         // alignItems:'center'
     },
     dataContainer: {
-        top: 50,
+        marginTop: 30,
         width
     },
     infoText: {
