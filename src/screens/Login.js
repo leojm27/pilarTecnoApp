@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from 'react-native-elements';
-import { StyleSheet, Alert, Text, View, SafeAreaView, ImageBackground, Dimensions, StatusBar, TouchableOpacity } from 'react-native';
+import { StyleSheet, Alert, Text, View, SafeAreaView, ImageBackground, Dimensions } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -23,7 +23,6 @@ class Login extends React.Component {
         this.state = {
             email: '',
             password: '',
-
         };
     }
 
@@ -41,9 +40,7 @@ class Login extends React.Component {
                     }
                 },
                 {
-                    text: "No", onPress: () => {
-                        console.log('_loginPress Cancel')
-                    }
+                    text: "No", onPress: () => console.log('_loginPress Cancel')
                 }
             ]
         );
@@ -57,25 +54,29 @@ class Login extends React.Component {
 
     onLoginPasswordUserPress = async () => {
         const { email, password } = this.state;
-        // verificar que no este vacio
-        //(email.)
 
-        auth().signInWithEmailAndPassword(email, password)
-            .then(async data => {
-                if (data) {
-                    //console.log('res login: ' + JSON.stringify(data.user));
-                    try {
-                        await AsyncStorage.setItem(
-                            'isloged',
-                            JSON.stringify(data.user),
-                        );
-                    } catch (e) {
-                        console.log('SetItem error:' + e);
+        (email != '' && password != '')
+            ? auth().signInWithEmailAndPassword(email, password)
+                .then(async data => {
+                    if (data) {
+                        //console.log('res login: ' + JSON.stringify(data.user));
+                        try {
+                            await AsyncStorage.setItem(
+                                'isloged',
+                                JSON.stringify(data.user),
+                            );
+                        } catch (e) {
+                            console.log('setItem error:' + e);
+                        }
+                        this.props.setUser(data.user);
                     }
-                    this.props.setUser(data.user);
-                }
-            })
-            .catch(err => { console.log(err) })
+                })
+                .catch(e => {
+                    console.log('signInWithEmailAndPassword error: ' + e);
+                    let errorMessage = e.code;
+                    alert(errorMessage);
+                })
+            : (alert('you must complete the fields'))
     }
 
     _storeData = async (data) => {
@@ -83,7 +84,7 @@ class Login extends React.Component {
             try {
                 await AsyncStorage.setItem('isloged', JSON.stringify(data.user))
             } catch (e) {
-                console.log('SetItem error:' + e)
+                console.log('setItem error:' + e)
             }
             this.props.setUser(data.user)
         }
@@ -96,8 +97,7 @@ class Login extends React.Component {
                 <View >
                     <ImageBackground
                         style={styles.backImage}
-                        source={require('../assets/images/fondo1.jpg')}
-                    >
+                        source={require('../assets/images/fondo1.jpg')} >
                         <View>
                             <Text style={styles.text}> Log In </Text>
                         </View>
@@ -106,27 +106,30 @@ class Login extends React.Component {
                             style={styles.input}
                             placeholder='email'
                             placeholderTextColor='#b0b0b0'
-                            onChangeText={em => this.setState({ email: em })}
-                        />
+                            onChangeText={em => this.setState({ email: em })} />
+
                         <Input
                             style={styles.input}
                             placeholder="password"
                             placeholderTextColor='#b0b0b0'
                             secureTextEntry={true}
-                            onChangeText={psw => this.setState({ password: psw })}
-                        />
+                            onChangeText={psw => this.setState({ password: psw })} />
 
-                        <View style={[styles.buttonsContainer, { flexDirection: 'row' }]}>
-                            <View style={{ marginRight: 10 }}>
-                                <Button style={styles.button} title='Sign In'
-                                    onPress={() => this.onLoginPasswordUserPress()} />
-                            </View>
-                            <View style={{ marginLeft: 10 }}>
-                                <Button style={styles.button} title='Sign Up'
-                                    onPress={() => this.props.navigation.navigate('Create')}
-                                />
+                        <View style={{ flexDirection: 'row' }}>
+                            <View style={styles.buttonsContainer}>
+                                <View style={{ marginRight: 10 }}>
+                                    <Button style={styles.button} title='Sign In'
+                                        onPress={() => this.onLoginPasswordUserPress()} />
+                                </View>
                             </View>
 
+                            <View style={styles.buttonsContainer}>
+                                <View style={{ marginLeft: 10 }}>
+                                    <Button style={styles.button} title='Sign Up'
+                                        onPress={() => this.props.navigation.navigate('Create')}
+                                    />
+                                </View>
+                            </View>
                         </View>
 
                         <View style={styles.buttonsContainer}>
@@ -135,8 +138,6 @@ class Login extends React.Component {
                                 onPress={() => this._loginPress()}
                             />
                         </View>
-
-
                     </ImageBackground>
                 </View>
             </SafeAreaView>
@@ -155,7 +156,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white',
         textAlign: 'left',
-        //backgroundColor: '#fff',
     },
     backImage: {
         height,
@@ -170,18 +170,13 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     button: {
-        //margin: width / 20,
-        //marginRight: 20,
-        width: width / 1.5,
         borderRadius: 15,
-        //marginLeft: 20,
         justifyContent: 'center',
-        //backgroundColor: '#000',
         zIndex: 1
     },
     buttonsContainer: {
         alignItems: 'center',
-        //justifyContent: 'center',
+        marginHorizontal: 20,
         paddingVertical: 20,
     },
 });

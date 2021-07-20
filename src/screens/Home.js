@@ -17,8 +17,6 @@ const width = Dimensions.get('window').width
 
 export const Home = () => {
 
-  const navigation = useNavigation();
-
   _onHomePress = () => {
     Alert.alert(
       "Hi!",

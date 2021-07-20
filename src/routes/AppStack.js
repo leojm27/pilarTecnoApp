@@ -42,7 +42,6 @@ export const AppStack = (props) => {
             component={Tabs}
           />
           : <Stack.Screen name="CreateStack" component={CreateStack} />
-
       }
     </Stack.Navigator>
   )

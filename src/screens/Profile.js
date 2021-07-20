@@ -38,7 +38,7 @@ class Profile extends React.Component {
 
     _logOutPress = () => {
         Alert.alert(
-            "Login",
+            "Profile",
             "Do you want to log out?",
             [
                 {
@@ -111,15 +111,12 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 30,
         fontWeight: 'bold',
-        // color:'#fff',
         textAlign: 'center'
     },
     content: {
         flex: 1,
         marginTop: 60,
-        //top: 50,
         justifyContent: 'center',
-        // alignItems:'center'
     },
     dataContainer: {
         marginTop: 30,
