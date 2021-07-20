@@ -21,7 +21,7 @@ export const AppStack = (props) => {
       dispatch(actions.user.setUser(null))
     }
     if (initializing) setInitializing(false);
-  }
+  } 
 
 
   useEffect(() => {
@@ -38,7 +38,6 @@ export const AppStack = (props) => {
         login
           ? <Stack.Screen
             name="AppStack"
-            refresh={this.onAuthStateChanged}
             component={Tabs}
           />
           : <Stack.Screen name="CreateStack" component={CreateStack} />

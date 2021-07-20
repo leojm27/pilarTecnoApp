@@ -15,7 +15,7 @@ const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 
 
-export const Home = () => {
+export const Home = (props) => {
 
   _onHomePress = () => {
     Alert.alert(
@@ -26,6 +26,8 @@ export const Home = () => {
       ]
     );
   }
+
+  const natigator = useNavigation();
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -45,7 +47,7 @@ export const Home = () => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              //onPress={() => navigation.navigate('ProfileStackScreen')}
+              onPress={() => natigator.navigate('Profile')}
               style={[styles.button, { backgroundColor: 'rgba(238, 0, 238, 0.8)' }]}>
               <Text style={styles.text}>
                 Profile
@@ -55,7 +57,7 @@ export const Home = () => {
 
           <View style={{ flexDirection: 'row', }}>
             <TouchableOpacity
-              //onPress={() => navigation.navigate('Posts')}
+              onPress={() => natigator.navigate('Posts')}
               style={[styles.button, { backgroundColor: 'rgba(255, 165, 0, 0.8)' }]}>
               <Text style={styles.text}>
                 Posts
@@ -63,7 +65,7 @@ export const Home = () => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              //onPress={() => navigation.navigate('Map')}
+              onPress={() => natigator.navigate('Map')}
               style={[styles.button, { backgroundColor: 'rgba(0, 165, 188, 0.8)' }]}>
               <Text style={styles.text}>
                 Map
