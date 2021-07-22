@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Home } from '../screens/Home';
 import Profile from '../screens/Profile';
-import { Posts } from '../screens/Posts';
 import { Map } from '../screens/Map';
+import Posts from '../screens/Posts';
 
 const HomeStack = createStackNavigator();
 
