@@ -1,13 +1,17 @@
+
+import React, { Component } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { SafeAreaView, Dimensions, StyleSheet, Text, ActivityIndicator, FlatList, View, ImageBackground } from 'react-native';
+import { SafeAreaView, Dimensions, StyleSheet, Text, ActivityIndicator, FlatList, View, ImageBackground, TouchableOpacity } from 'react-native';
 import { Button, Divider } from 'react-native-elements'
 import { actions } from '../store'
 import { connect } from 'react-redux'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { Icon } from 'react-native-elements/dist/icons/Icon';
 
-const height = Dimensions.get('window').height
-const width = Dimensions.get('window').width
+const height = Dimensions.get('window').height;
+const width = Dimensions.get('window').width;
+
+const navigation = useNavigation();
 
 class Posts extends React.Component {
 
@@ -19,79 +23,90 @@ class Posts extends React.Component {
     }
 
     componentDidMount = () => {
-        this.props.getPosts();
-
+        this.props.getPosts()
     }
 
     keyExtractor = (item, index) => index.toString()
 
     renderItem = ({ item }) => (
-        <TouchableWithoutFeedback
-            onPress={() => this.props.navigation.navigate('PostDetail', { item })} >
-            <View style={{
-                margin: 20,
-                backgroundColor: 'rgba(0,0,0,0.5)',
-                borderRadius: 8,
-                padding: 5
-            }}>
-                <View style={styles.titlecontainer}>
-                    <Text style={styles.title}>
-                        {item.title}
-                    </Text>
-                </View>
-                <Divider />
-                <View style={styles.bodycontainer}>
-                    <Text style={styles.text}>
-                        {item.body}
-                    </Text>
-                </View>
+        <View style={{
+            margin: 20,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            borderRadius: 8,
+            padding: 5
+        }}>
+            <View style={styles.titlecontainer}>
+                <Text style={styles.title}>
+                    {item.title}
+                </Text>
             </View>
-        </TouchableWithoutFeedback>
+            <Divider />
+            <View style={styles.bodycontainer}>
+                <Text style={styles.text}>
+                    {item.body}
+                </Text>
+            </View>
+            <View>
+                <Button title='verr'
+                    onPress={() => this.props.navigation.navigate('PostDetail', { item })}
+                />
+            </View>
+        </View>
     )
 
-    render() {
 
+    render() {
+        //console.log(this.props.posts)
         return (
-            console.log('soy props posts:'),
-            console.log(this.props.posts),
-            <SafeAreaView style={{
+            <View>
+                {/*<SafeAreaView style={{
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: 'white'
-            }}>
+                backgroundColor: 'white',
+                marginBottom: 50
+            }}>*/}
+
                 {
-                    (!this.props.posts)
+                    !this.props.posts
                         ? <ActivityIndicator />
-                        : (<ImageBackground
+                        : <ImageBackground
                             style={{
-                                height,
-                                width,
-                                paddingTop:
-                                    height / 9
+                                height, width,
+                                //marginHorizontal: 20 
                             }}
-                            source={require('../assets/images/fondo6.jpg')}>
-                            <View style={{ flex: 1 }}>
+                            source={require('../assets/images/fondo1.jpg')}
+                        //style={{ height, width, paddingTop: height / 9 }}
+                        //source={require('../assets/images/fondo6.jpg')}
+                        >
+                            <View style={{ flex: 1, marginTop: 20, marginBottom: 130 }}>
                                 <Button title='Crear Nuevo Post'
                                     onPress={() => this.props.navigation.navigate('PostCreate')} />
                                 <FlatList
+                                style={{ fontSize: 50}}
                                     keyExtractor={this.keyExtractor}
-                                    data={this.props.posts}
+                                    data={this.props.posts.reverse()}
                                     renderItem={this.renderItem}
                                 />
                             </View>
-                        </ImageBackground>)
+                        </ImageBackground>
                 }
-            </SafeAreaView>
+                {/*</SafeAreaView>*/}
+
+            </View>
         )
     }
 }
+
 
 const styles = StyleSheet.create({
     text: {
         fontSize: 14,
         color: '#fff',
         textAlign: 'center'
+    },
+    botonFlotante: {
+        position: 'absolute'
     },
     title: {
         fontSize: 16,
@@ -118,20 +133,7 @@ const mapDispatchToProps = dispatch => ({
     getPosts: () =>
         dispatch(actions.posts.getPosts()),
 })
-
 const mapStateToProps = state => ({
     posts: state.posts.posts,
 })
-
 export default connect(mapStateToProps, mapDispatchToProps)((Posts))
-
-
-/*export const Posts = () => {
-
-    return (
-        <View style={styles.margin}>
-            <Text style={styles.title}>Screen Posts</Text>
-        </View>
-    );
-
-}*/

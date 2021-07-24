@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, Dimensions, StyleSheet, ImageBackground, } from 'react-native';
+import { SafeAreaView, Dimensions, StyleSheet, ImageBackground, ViewBase, View, Text, } from 'react-native';
 import { Input, Button } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { actions } from '../store'
@@ -17,51 +17,11 @@ class PostEdit extends React.Component {
         }
     }
 
-    _send = () => {
-        const { title, body } = this.state
-        ///VALIDACIONES
-        this.props.createPost({ title, body }).then(() => {
-            this.props.navigation.goBack()
-        })
-    }
-
     render() {
         return (
-            <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ImageBackground
-                    style={[styles.content, { height, width }]}
-                    source={require('../assets/images/fondo6.jpg')}
-                >
-                    <Input
-                        placeholder='Titulo'
-                        inputContainerStyle={{
-                            width: width * 0.8, alignItems: 'flex-start',
-                            alignSelf: 'center', backgroundColor: 'rgba(0,0,0,0.5)', pading: 15
-                        }}
-                        inputStyle={{ color: 'white', marginLeft: 15 }}
-                        placeholderTextColor='#ccc'
-                        value={this.state.title}
-                        onChangeText={(value) => this.setState({ title: value })}
-                    />
-                    <Input
-                        placeholder='Descripcion'
-                        inputContainerStyle={{
-                            width: width * 0.8, alignItems: 'flex-start',
-                            alignSelf: 'center', height: height * 0.4, backgroundColor: 'rgba(0,0,0,0.5)',
-                            pading: 15
-                        }}
-                        inputStyle={{ color: 'white', marginLeft: 15 }}
-                        placeholderTextColor='#ccc'
-                        value={this.state.body}
-                        onChangeText={(value) => this.setState({ body: value })}
-                        multiline
-                        numberOfLines={2}
-                    />
-                    <Button title='Postear' onPress={() => this._send()}
-                        style={{ width: width * 0.8 }} />
-                </ImageBackground>
-                {/* </View> */}
-            </SafeAreaView>
+            <View>
+                <Text>PostEdit.js</Text>
+            </View>
         )
     }
 }
@@ -84,9 +44,10 @@ const styles = StyleSheet.create({
     }
 })
 
+
 const mapDispatchToProps = dispatch => ({
-    createPost: (data) =>
-        dispatch(actions.posts.createPost(data)),
+    updatePost: (data) =>
+        dispatch(actions.posts.updatePost(data)),
 })
 
 const mapStateToProps = state => ({

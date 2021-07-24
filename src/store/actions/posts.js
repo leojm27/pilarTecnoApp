@@ -1,5 +1,5 @@
 import { FETCH_POSTS, POST_POSTS, DEL_POSTS, UPDATE_POSTS } from '../constants';
-import { fetchPosts, postPosts, deletePost, } from '../../api';
+import { fetchPosts, postPosts, deletePost, putPost } from '../../api';
 
 const getPostsSucess = (data) => {
     return {
@@ -51,7 +51,7 @@ export const createPost = (data) => (dispatch) => {
 }
 
 export const delpost = (data) => (dispatch) => {
-    const { id } = data 
+    const { id } = data;
     return deletePost({ id })
         .then(([response, json]) => {
             if (response.ok === true) {

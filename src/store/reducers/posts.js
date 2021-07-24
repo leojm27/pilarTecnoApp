@@ -1,14 +1,18 @@
 import { FETCH_POSTS, POST_POSTS, DEL_POSTS, UPDATE_POSTS } from '../constants';
+
 const initialState = {
     posts: null,
 };
+
 export default (state = initialState, action) => {
+
     if (action.type === FETCH_POSTS) {
         return {
             ...state,
             posts: action.data,
         };
     }
+
     if (action.type === POST_POSTS) {
         return {
             ...state,
@@ -18,8 +22,9 @@ export default (state = initialState, action) => {
             }],
         };
     }
+
     if (action.type === UPDATE_POSTS) {
-        update = posts.map((post) => {
+        update = state.posts.map((post) => {
             if (post.id === action.data.id) {
                 return {
                     data,
@@ -32,18 +37,14 @@ export default (state = initialState, action) => {
             post: update
         }
     }
+
     if (action.type === DEL_POSTS) {
-        update = posts.map((post) => {
-            if (post.id !== action.data.id) {
-                return {
-                    post,
-                }
-            }
-        })
+        update = state.posts.filter(post => post.id !== action.data.id)
         return {
             ...state,
             post: update
         }
     }
+
     return { ...state };
 };

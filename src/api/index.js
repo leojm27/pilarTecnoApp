@@ -21,7 +21,7 @@ export const postPosts = ({ title, body }) => {
     return fetch(BASE_URL + '/posts', {
         method: 'POST',
         body: JSON.stringify({
-            title,
+            title, 
             body,
             userId: 1,
         }),

@@ -1,67 +1,84 @@
 import React, { Component } from 'react';
-import { SafeAreaView, Dimensions, StyleSheet, ImageBackground, } from 'react-native';
+import { SafeAreaView, Dimensions, StyleSheet, ImageBackground, View, Text, TouchableOpacity, } from 'react-native';
 import { Input, Button } from 'react-native-elements'
+import { Card, Icon } from 'react-native-elements';
+import { Divider } from 'react-native-elements/dist/divider/Divider';
 import { connect } from 'react-redux'
 import { actions } from '../store'
 
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 
+
 class PostDetail extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            title: '',
-            body: ''
-        }
     }
 
-    _send = () => {
-        const { title, body } = this.state
-        ///VALIDACIONES
-        this.props.createPost({ title, body }).then(() => {
-            this.props.navigation.goBack()
-        })
+    _deletePost = () => {
+        const { item } = this.props.route.params;
+        const { id } = item;
+
+        this.props.delpost({ id })
+            .then(() => {
+                this.props.navigation.navigate('Posts')
+            })
+            .catch((e) => console.log("error: ", e))
     }
 
     render() {
+        const { item } = this.props.route.params;
         return (
-            <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ImageBackground
-                    style={[styles.content, { height, width }]}
-                    source={require('../assets/images/fondo6.jpg')}
-                >
-                    <Input
-                        placeholder='Titulo'
-                        inputContainerStyle={{
-                            width: width * 0.8, alignItems: 'flex-start',
-                            alignSelf: 'center', backgroundColor: 'rgba(0,0,0,0.5)', pading: 15
-                        }}
-                        inputStyle={{ color: 'white', marginLeft: 15 }}
-                        placeholderTextColor='#ccc'
-                        value={this.state.title}
-                        onChangeText={(value) => this.setState({ title: value })}
-                    />
-                    <Input
-                        placeholder='Descripcion'
-                        inputContainerStyle={{
-                            width: width * 0.8, alignItems: 'flex-start',
-                            alignSelf: 'center', height: height * 0.4, backgroundColor: 'rgba(0,0,0,0.5)',
-                            pading: 15
-                        }}
-                        inputStyle={{ color: 'white', marginLeft: 15 }}
-                        placeholderTextColor='#ccc'
-                        value={this.state.body}
-                        onChangeText={(value) => this.setState({ body: value })}
-                        multiline
-                        numberOfLines={2}
-                    />
-                    <Button title='Postear' onPress={() => this._send()}
-                        style={{ width: width * 0.8 }} />
-                </ImageBackground>
-                {/* </View> */}
-            </SafeAreaView>
+            <ImageBackground
+                style={{
+                    height, width,
+                    //marginHorizontal: 20 
+                }}
+                source={require('../assets/images/fondo1.jpg')}
+            >
+
+
+                <View style={{
+                    //marginTop: 200,
+                    margin: 20,
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                    borderRadius: 8,
+                    padding: 5
+                }}>
+                    <View style={styles.titlecontainer}>
+                        <Text style={{ ...styles.title, fontSize: 24 }}>
+                            Title
+                        </Text>
+                        <Text style={{ ...styles.title, textAlign: 'left', fontWeight: 'normal' }}>
+                            {item.title}
+                        </Text>
+                    </View>
+                    <Divider />
+                    <View style={styles.bodycontainer}>
+                        <Text style={{ ...styles.title, fontSize: 24 }}>
+                            Description
+                        </Text>
+                        <Text style={{ ...styles.title, textAlign: 'left', fontWeight: 'normal' }}>
+                            {item.body}
+                        </Text>
+                    </View>
+                    <View style={styles.marginButton}>
+                        <Button
+                            title='Edit'
+                            onPress={() => this.props.navigation.navigate('PostEdit', { item })}
+                        />
+                    </View>
+                    <View style={styles.marginButton}>
+                        <Button
+                            title='Delete'
+                            onPress={() => this._deletePost()}
+                        />
+                    </View>
+
+                </View>
+
+            </ImageBackground>
         )
     }
 }
@@ -69,10 +86,35 @@ class PostDetail extends React.Component {
 
 const styles = StyleSheet.create({
     text: {
-        fontSize: 30,
+        fontSize: 16,
+        fontWeight: 'normal',
+        //color: '#fff',
+        textAlign: 'left'
+    },
+    textItem: {
+        //fontSize: 15,
         fontWeight: 'bold',
         // color:'#fff',
-        textAlign: 'center'
+        textAlign: 'left'
+    },
+    button: {
+        borderRadius: 15,
+        justifyContent: 'center',
+        zIndex: 1
+    },
+    buttonsContainer: {
+        alignItems: 'center',
+        marginHorizontal: 20,
+        paddingVertical: 20,
+    },
+    marginButton: {
+        marginTop: 20
+    },
+    fontSizeTitle: {
+        fontSize: 18,
+    },
+    fontSizeItem: {
+        fontSize: 14,
     },
     content: {
         margin: width / 20,
@@ -81,12 +123,28 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },
+    containerText: {
+        borderRadius: 15,
+        justifyContent: 'center',
+    },
+    title: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#fff',
+        textAlign: 'center'
+    },
+    titlecontainer: {
+        padding: 10
+    },
+    bodycontainer: {
+        padding: 10
+    },
 })
 
 const mapDispatchToProps = dispatch => ({
-    createPost: (data) =>
-        dispatch(actions.posts.createPost(data)),
+    delpost: (data) =>
+        dispatch(actions.posts.delpost(data)),
 })
 
 const mapStateToProps = state => ({

@@ -104,8 +104,6 @@ const mapDispatchToProps = dispatch => ({
     createPost: (data) =>
         dispatch(actions.posts.createPost(data)),
 })
-
 const mapStateToProps = state => ({
 })
-
 export default connect(mapStateToProps, mapDispatchToProps)((PostCreate))

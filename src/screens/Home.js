@@ -14,8 +14,13 @@ import {
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 
+const natigator = useNavigation();
 
-export const Home = (props) => {
+export default class Home extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
 
   _onHomePress = () => {
     Alert.alert(
@@ -27,56 +32,58 @@ export const Home = (props) => {
     );
   }
 
-  const natigator = useNavigation();
 
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ImageBackground
-        style={{ height }}
-        source={require('../assets/images/fondo1.jpg')}
-      >
-        <View style={{ flexDirection: 'column', height, marginVertical: 100 }}>
-          <View style={{ flexDirection: 'row' }}>
-            <TouchableOpacity
-              onPress={() => this._onHomePress()}
-              style={[styles.button, { backgroundColor: 'rgba(60, 235, 113, 0.8)' }]}
-            >
-              <Text style={styles.text}>
-                Home
-              </Text>
-            </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={() => natigator.navigate('Profile')}
-              style={[styles.button, { backgroundColor: 'rgba(238, 0, 238, 0.8)' }]}>
-              <Text style={styles.text}>
-                Profile
-              </Text>
-            </TouchableOpacity>
+  render() {
+    return (
+      <SafeAreaView style={{ flex: 1 }}>
+        <ImageBackground
+          style={{ height }}
+          source={require('../assets/images/fondo1.jpg')}
+        >
+          <View style={{ flexDirection: 'column', height, marginVertical: 100 }}>
+            <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity
+                onPress={() => this._onHomePress()}
+                style={[styles.button, { backgroundColor: 'rgba(60, 235, 113, 0.8)' }]}
+              >
+                <Text style={styles.text}>
+                  Home
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Profile')}
+                style={[styles.button, { backgroundColor: 'rgba(238, 0, 238, 0.8)' }]}>
+                <Text style={styles.text}>
+                  Profile
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={{ flexDirection: 'row', }}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Posts')}
+                style={[styles.button, { backgroundColor: 'rgba(255, 165, 0, 0.8)' }]}>
+                <Text style={styles.text}>
+                  Posts
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Map')}
+                style={[styles.button, { backgroundColor: 'rgba(0, 165, 188, 0.8)' }]}>
+                <Text style={styles.text}>
+                  Map
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
 
-          <View style={{ flexDirection: 'row', }}>
-            <TouchableOpacity
-              onPress={() => natigator.navigate('Posts')}
-              style={[styles.button, { backgroundColor: 'rgba(255, 165, 0, 0.8)' }]}>
-              <Text style={styles.text}>
-                Posts
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => natigator.navigate('Map')}
-              style={[styles.button, { backgroundColor: 'rgba(0, 165, 188, 0.8)' }]}>
-              <Text style={styles.text}>
-                Map
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-      </ImageBackground>
-    </SafeAreaView>
-  )
+        </ImageBackground>
+      </SafeAreaView>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
