@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { Component } from 'react';
 import {
   SafeAreaView,
@@ -13,8 +12,6 @@ import {
 
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
-
-const natigator = useNavigation();
 
 export default class Home extends React.Component {
 
@@ -53,7 +50,7 @@ export default class Home extends React.Component {
               </TouchableOpacity>
 
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Profile')}
+                onPress={() => this.props.navigation.navigate("Profile")}
                 style={[styles.button, { backgroundColor: 'rgba(238, 0, 238, 0.8)' }]}>
                 <Text style={styles.text}>
                   Profile
@@ -63,7 +60,7 @@ export default class Home extends React.Component {
 
             <View style={{ flexDirection: 'row', }}>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Posts')}
+                onPress={() => this.props.navigation.navigate("Post")}
                 style={[styles.button, { backgroundColor: 'rgba(255, 165, 0, 0.8)' }]}>
                 <Text style={styles.text}>
                   Posts
@@ -71,7 +68,7 @@ export default class Home extends React.Component {
               </TouchableOpacity>
 
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Map')}
+                onPress={() => this.props.navigation.navigate("Map")}
                 style={[styles.button, { backgroundColor: 'rgba(0, 165, 188, 0.8)' }]}>
                 <Text style={styles.text}>
                   Map

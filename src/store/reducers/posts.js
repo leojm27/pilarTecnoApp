@@ -17,8 +17,9 @@ export default (state = initialState, action) => {
         return {
             ...state,
             posts: [...state.posts, {
-                userId: 1, title: action.data.title,
-                body: action.data.body
+                userId: 1,
+                title: action.data.title,
+                body: action.data.body,
             }],
         };
     }
@@ -26,15 +27,13 @@ export default (state = initialState, action) => {
     if (action.type === UPDATE_POSTS) {
         update = state.posts.map((post) => {
             if (post.id === action.data.id) {
-                return {
-                    data,
-                }
+                return action.data
             }
             return post
         })
         return {
             ...state,
-            post: update
+            posts: update
         }
     }
 
@@ -42,7 +41,7 @@ export default (state = initialState, action) => {
         update = state.posts.filter(post => post.id !== action.data.id)
         return {
             ...state,
-            post: update
+            posts: update
         }
     }
 

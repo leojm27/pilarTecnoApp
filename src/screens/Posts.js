@@ -1,29 +1,23 @@
 
 import React, { Component } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView, Dimensions, StyleSheet, Text, ActivityIndicator, FlatList, View, ImageBackground, TouchableOpacity } from 'react-native';
-import { Button, Divider } from 'react-native-elements'
-import { actions } from '../store'
-import { connect } from 'react-redux'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { Icon } from 'react-native-elements/dist/icons/Icon';
+import { Dimensions, StyleSheet, Text, ActivityIndicator, FlatList, View, ImageBackground } from 'react-native';
+import { Button, Divider } from 'react-native-elements';
+import { actions } from '../store';
+import { connect } from 'react-redux';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
-
-const navigation = useNavigation();
 
 class Posts extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            posts: null,
-        }
     }
 
     componentDidMount = () => {
-        this.props.getPosts()
+        (!this.props.posts)
+            ? this.props.getPosts()
+            : (null)
     }
 
     keyExtractor = (item, index) => index.toString()
@@ -47,7 +41,7 @@ class Posts extends React.Component {
                 </Text>
             </View>
             <View>
-                <Button title='verr'
+                <Button title='detail'
                     onPress={() => this.props.navigation.navigate('PostDetail', { item })}
                 />
             </View>
@@ -56,34 +50,19 @@ class Posts extends React.Component {
 
 
     render() {
-        //console.log(this.props.posts)
         return (
             <View>
-                {/*<SafeAreaView style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'white',
-                marginBottom: 50
-            }}>*/}
-
                 {
                     !this.props.posts
                         ? <ActivityIndicator />
                         : <ImageBackground
-                            style={{
-                                height, width,
-                                //marginHorizontal: 20 
-                            }}
-                            source={require('../assets/images/fondo1.jpg')}
-                        //style={{ height, width, paddingTop: height / 9 }}
-                        //source={require('../assets/images/fondo6.jpg')}
-                        >
+                            style={{ height, width, }}
+                            source={require('../assets/images/fondo1.jpg')}>
                             <View style={{ flex: 1, marginTop: 20, marginBottom: 130 }}>
-                                <Button title='Crear Nuevo Post'
+                                <Button title='Create New Post'
                                     onPress={() => this.props.navigation.navigate('PostCreate')} />
                                 <FlatList
-                                style={{ fontSize: 50}}
+                                    style={{ fontSize: 50 }}
                                     keyExtractor={this.keyExtractor}
                                     data={this.props.posts.reverse()}
                                     renderItem={this.renderItem}
@@ -91,8 +70,6 @@ class Posts extends React.Component {
                             </View>
                         </ImageBackground>
                 }
-                {/*</SafeAreaView>*/}
-
             </View>
         )
     }
@@ -100,15 +77,12 @@ class Posts extends React.Component {
 
 
 const styles = StyleSheet.create({
-    text: {
+    text: { 
         fontSize: 14,
         color: '#fff',
         textAlign: 'center'
     },
-    botonFlotante: {
-        position: 'absolute'
-    },
-    title: {
+    title: { 
         fontSize: 16,
         fontWeight: 'bold',
         color: '#fff',
@@ -117,16 +91,9 @@ const styles = StyleSheet.create({
     titlecontainer: {
         padding: 10
     },
-    bodycontainer: {
+    bodycontainer: { 
         padding: 10
     },
-    content: {
-        margin: width / 20,
-        height: width / 2.5,
-        width: width / 2.5,
-        borderRadius: 15,
-        justifyContent: 'center',
-    }
 })
 
 const mapDispatchToProps = dispatch => ({

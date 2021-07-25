@@ -1,5 +1,6 @@
 
 const BASE_URL = 'https://jsonplaceholder.typicode.com'
+
 ///LIST POSTS
 export const fetchPosts = () => {
     return fetch(BASE_URL + '/posts')
@@ -21,7 +22,7 @@ export const postPosts = ({ title, body }) => {
     return fetch(BASE_URL + '/posts', {
         method: 'POST',
         body: JSON.stringify({
-            title, 
+            title,
             body,
             userId: 1,
         }),
@@ -53,6 +54,7 @@ export const putPost = ({ title, body, id }) => {
             console.log('json create: ' + JSON.stringify(Response))
             return Promise.all([Response, Response.json()])
         })
+        .catch((err) => console.log(err))
 }
 
 ///DELETE POST
@@ -61,7 +63,7 @@ export const deletePost = ({ id }) => {
         method: 'DELETE'
     })
         .then(Response => {
-            console.log('json create: ' + JSON.stringify(Response))
+            console.log('json delete: ' + JSON.stringify(Response))
             return Promise.all([Response, Response.json()])
         })
 }
@@ -81,7 +83,7 @@ export const showPost = ({ title, body, id }) => {
         },
     })
         .then(Response => {
-            console.log('json create: ' + JSON.stringify(Response))
+            console.log('json show: ' + JSON.stringify(Response))
             return Promise.all([Response, Response.json()])
         })
 }

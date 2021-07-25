@@ -47,7 +47,7 @@ export const createPost = (data) => (dispatch) => {
             }
             return json
         })
-        .catch((error) => console.log(error))
+        .catch((error) => console.log('createPost error: ' + error))
 }
 
 export const delpost = (data) => (dispatch) => {
@@ -59,17 +59,17 @@ export const delpost = (data) => (dispatch) => {
             }
             return json
         })
-        .catch((error) => console.log(error))
+        .catch((error) => console.log('delpost error: ' + error))
 }
 
 export const updatePost = (data) => (dispatch) => {
-    const { id } = data
-    return updatePost({ id })
+    const { title, body, id } = data
+    return putPost({ title, body, id })
         .then(([response, json]) => {
             if (response.ok === true) {
                 dispatch(updatePostSuceess(data))
             }
             return json
         })
-        .catch((error) => console.log(error))
+        .catch((error) => console.log('updatePost error: ' + error))
 }

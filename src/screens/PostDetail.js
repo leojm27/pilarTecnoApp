@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { SafeAreaView, Dimensions, StyleSheet, ImageBackground, View, Text, TouchableOpacity, } from 'react-native';
+import { Dimensions, StyleSheet, ImageBackground, View, Text } from 'react-native';
 import { Input, Button } from 'react-native-elements'
-import { Card, Icon } from 'react-native-elements';
 import { Divider } from 'react-native-elements/dist/divider/Divider';
 import { connect } from 'react-redux'
 import { actions } from '../store'
@@ -33,14 +32,12 @@ class PostDetail extends React.Component {
             <ImageBackground
                 style={{
                     height, width,
-                    //marginHorizontal: 20 
                 }}
                 source={require('../assets/images/fondo1.jpg')}
             >
 
 
                 <View style={{
-                    //marginTop: 200,
                     margin: 20,
                     backgroundColor: 'rgba(0,0,0,0.5)',
                     borderRadius: 8,
@@ -63,13 +60,13 @@ class PostDetail extends React.Component {
                             {item.body}
                         </Text>
                     </View>
-                    <View style={styles.marginButton}>
+                    <View >
                         <Button
                             title='Edit'
                             onPress={() => this.props.navigation.navigate('PostEdit', { item })}
                         />
                     </View>
-                    <View style={styles.marginButton}>
+                    <View style={{marginTop: 20}}>
                         <Button
                             title='Delete'
                             onPress={() => this._deletePost()}
@@ -85,7 +82,7 @@ class PostDetail extends React.Component {
 
 
 const styles = StyleSheet.create({
-    text: {
+    /*text: {
         fontSize: 16,
         fontWeight: 'normal',
         //color: '#fff',
@@ -107,9 +104,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         paddingVertical: 20,
     },
-    marginButton: {
-        marginTop: 20
-    },
     fontSizeTitle: {
         fontSize: 18,
     },
@@ -127,17 +121,17 @@ const styles = StyleSheet.create({
     containerText: {
         borderRadius: 15,
         justifyContent: 'center',
-    },
-    title: {
+    },*/
+    title: {    ///
         fontSize: 16,
         fontWeight: 'bold',
         color: '#fff',
         textAlign: 'center'
     },
-    titlecontainer: {
+    titlecontainer: {   //
         padding: 10
     },
-    bodycontainer: {
+    bodycontainer: {        //
         padding: 10
     },
 })

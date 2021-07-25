@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, Dimensions, StyleSheet, ImageBackground, } from 'react-native';
+import { Dimensions, StyleSheet, ImageBackground, View, } from 'react-native';
 import { Input, Button } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { actions } from '../store'
@@ -21,23 +21,23 @@ class PostCreate extends React.Component {
         const { title, body } = this.state
         ///VALIDACIONES
         this.props.createPost({ title, body }).then(() => {
-            this.props.navigation.goBack()
+            this.props.navigation.navigate('Posts');
         })
     }
 
     render() {
         return (
-            <SafeAreaView style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}>
-                <ImageBackground
-                    style={[styles.content, { height, width }]}
-                    source={require('../assets/images/fondo6.jpg')}
-                >
+            <ImageBackground
+                style={{ height, width, }}
+                source={require('../assets/images/fondo1.jpg')}
+            >
+
+                <View style={{
+                    margin: 20,
+                    padding: 5
+                }}>
                     <Input
-                        placeholder='Titulo'
+                        placeholder='Title'
                         inputContainerStyle={{
                             width: width * 0.8,
                             alignItems: 'flex-start',
@@ -54,7 +54,7 @@ class PostCreate extends React.Component {
                         onChangeText={(value) => this.setState({ title: value })}
                     />
                     <Input
-                        placeholder='Descripcion'
+                        placeholder='Description'
                         inputContainerStyle={{
                             width: width * 0.8,
                             alignItems: 'flex-start',
@@ -73,11 +73,14 @@ class PostCreate extends React.Component {
                         multiline
                         numberOfLines={2}
                     />
-                    <Button title='Postear' onPress={() => this._send()}
-                        style={{ width: width * 0.8 }} />
-                </ImageBackground>
-                {/* </View> */}
-            </SafeAreaView>
+                    <View style={{ marginHorizontal: 50 }}>
+                        <Button
+                            title='Post'
+                            onPress={() => this._send()}
+                            style={{ marginTop: 20, marginHorizontal: 50 }} />
+                    </View>
+                </View>
+            </ImageBackground>
         )
     }
 }
@@ -87,7 +90,6 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 30,
         fontWeight: 'bold',
-        // color:'#fff',
         textAlign: 'center'
     },
     content: {
