@@ -66,7 +66,7 @@ class PostDetail extends React.Component {
                             onPress={() => this.props.navigation.navigate('PostEdit', { item })}
                         />
                     </View>
-                    <View style={{marginTop: 20}}>
+                    <View style={{ marginTop: 20 }}>
                         <Button
                             title='Delete'
                             onPress={() => this._deletePost()}
@@ -82,56 +82,16 @@ class PostDetail extends React.Component {
 
 
 const styles = StyleSheet.create({
-    /*text: {
-        fontSize: 16,
-        fontWeight: 'normal',
-        //color: '#fff',
-        textAlign: 'left'
-    },
-    textItem: {
-        //fontSize: 15,
-        fontWeight: 'bold',
-        // color:'#fff',
-        textAlign: 'left'
-    },
-    button: {
-        borderRadius: 15,
-        justifyContent: 'center',
-        zIndex: 1
-    },
-    buttonsContainer: {
-        alignItems: 'center',
-        marginHorizontal: 20,
-        paddingVertical: 20,
-    },
-    fontSizeTitle: {
-        fontSize: 18,
-    },
-    fontSizeItem: {
-        fontSize: 14,
-    },
-    content: {
-        margin: width / 20,
-        height: width / 2.5,
-        width: width / 2.5,
-        borderRadius: 15,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    containerText: {
-        borderRadius: 15,
-        justifyContent: 'center',
-    },*/
-    title: {    ///
+    title: {   
         fontSize: 16,
         fontWeight: 'bold',
         color: '#fff',
         textAlign: 'center'
     },
-    titlecontainer: {   //
+    titlecontainer: {
         padding: 10
     },
-    bodycontainer: {        //
+    bodycontainer: {
         padding: 10
     },
 })

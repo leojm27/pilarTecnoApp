@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, StyleSheet, ImageBackground, View, } from 'react-native';
+import { Dimensions, StyleSheet, ImageBackground, View, Alert, } from 'react-native';
 import { Input, Button } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { actions } from '../store'
@@ -18,11 +18,12 @@ class PostCreate extends React.Component {
     }
 
     _send = () => {
-        const { title, body } = this.state
-        ///VALIDACIONES
-        this.props.createPost({ title, body }).then(() => {
-            this.props.navigation.navigate('Posts');
-        })
+        const { title, body } = this.state;
+        (title != '' && body != '')
+            ? (this.props.createPost({ title, body }).then(() => {
+                this.props.navigation.navigate('Posts');
+            }))
+            : (alert('you must complete the fields'))
     }
 
     render() {

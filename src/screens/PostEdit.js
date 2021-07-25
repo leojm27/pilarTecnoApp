@@ -105,36 +105,12 @@ class PostEdit extends React.Component {
 
 
 const styles = StyleSheet.create({
-    /*text: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        // color:'#fff',
-        textAlign: 'center'
-    },
-    content: {
-        margin: width / 20,
-        height: width / 2.5,
-        width: width / 2.5,
-        borderRadius: 15,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    containerText: {
-        borderRadius: 15,
-        justifyContent: 'center',
-    },*/
-    title: {    ///
+    title: {
         fontSize: 20,
         fontWeight: 'bold',
         color: '#fff',
         textAlign: 'center'
     },
-    /*titlecontainer: {
-        padding: 10
-    },
-    bodycontainer: {
-        padding: 10
-    },*/
 })
 
 
